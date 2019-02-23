@@ -5,8 +5,14 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const userModel = require('./model.js');
 
-mongoose.connect("mongodb+srv://iet:webdev2019@cluster0-g2r7o.azure.mongodb.net/usersdb?retryWrites=true", ()=>{
-    console.log("DB connected");
+mongoose.connect("mongodb+srv://iet:webdev2019@cluster0-g2r7o.azure.mongodb.net/usersdb?retryWrites=true", (err)=>{
+    if(err) {
+        console.log(err);
+        throw err;
+    }else{
+        console.log("DB connected");
+    }
+    
 })
 
 app.use(bodyParser.urlencoded({extended: false}));  
@@ -16,15 +22,16 @@ const port = 5000;
 
 app.post('/save', (req, res, next) => {
     console.log(req.body);
-    var temp = mongoose.model('users');
-    var newUser = new temp({
-        email: req.body.email,
-        password: req.body.password
-    });
-    // const newUser = new userModel({
+    // var temp = mongoose.model('users');
+    // var newUser = new temp({
     //     email: req.body.email,
     //     password: req.body.password
     // });
+    const newUser = new userModel({
+        email: req.body.email,
+        password: req.body.password
+    });
+    console.log(typeof(newUser));
     newUser
         .save()
         .then((result) => {
