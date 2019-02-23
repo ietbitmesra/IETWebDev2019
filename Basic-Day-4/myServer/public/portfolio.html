@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/portfolio.css">
+</head>
+<body>
+       <img id="img2" src="public/img/profile.png" alt="It's a profile Pic">
+        <div class="text">
+            <h1>My Name</h1>
+            <h2>Web developer</h2>
+        </div>
+        <br>
+        <hr>
+        <div class="text">
+            <h1>About Me</h1>
+            <p>I am Teaching WebDev and i am bored</p>
+        </div>
+   </div>
+
+   <div style="width: 10%" class="container">
+    <form id="submit-form" class="form-group" method="POST" action="/print">
+        <input id="name-input" type="text" class="form-control" name="nam" placeholder="Name">
+        <input id="age-input" type="text" class="form-control" name="age" placeholder="Age">
+        <br>
+        <button style="margin: 0 auto; display: block" class="btn btn-warning" type="submit">Submit</button>
+    </form>
+   </div>
+
+   <ul id="my-data">
+
+   </ul>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+   <script>
+       $("#submit-form").submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "/print",
+                data: {
+                    nam: $("#name-input").val(),
+                    age: $("#age-input").val()
+                },
+                success: function(res) {
+                    console.log(res);
+                    $("#my-data").append("<li>"+res.Name+"</li>");
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+       });  
+   </script>
+</body>
