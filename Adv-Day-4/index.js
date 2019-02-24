@@ -20,6 +20,10 @@ app.use(bodyParser.json());
 
 const port = 5000;
 
+app.get('/', (req, res, next) => {
+    res.sendFile(path.join(__dirname+'/index.html'));
+});
+
 app.post('/save', (req, res, next) => {
     console.log(req.body);
     // var temp = mongoose.model('users');
